@@ -10,13 +10,12 @@ jobs:
       fail-fast: false
       matrix:
         keycloak_version:
-          - "26.6"
+          - "26.6.0"
+          - "26.6.1"
     steps:
       - uses: actions/checkout@v4
-
       - uses: docker/setup-qemu-action@v4
       - uses: docker/setup-buildx-action@v4
-
       - uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -30,5 +29,5 @@ jobs:
           build-args: |
             KEYCLOAK_VERSION=${{ matrix.keycloak_version }}
           tags: |
-            ${{ secrets.DOCKER_IMAGE }}:${{ matrix.keycloak_version }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_IMAGE }}:${{ matrix.keycloak_version }}
           platforms: linux/amd64,linux/arm64
