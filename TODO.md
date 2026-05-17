@@ -1,0 +1,1 @@
+- [ ] Add https://github.com/jgroups-extras/jgroups-kubernetes
