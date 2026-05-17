@@ -1,14 +1,22 @@
-{  
+{
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
+  "extends": ["config:recommended"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "keycloak-totp-admin-api JAR version",
+      "managerFilePatterns": ["(^|/)Containerfile$"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>.+?)\\s+ARG TOTP_ADMIN_API_VERSION=(?<currentValue>\\S+)"
+      ],
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    }
   ],
-    "packageRules": [
-      {
-        "matchDatasources": ["github-releases"],
-        "matchRegistryUrls": ["https://github.com/"],
-        "matchPackageNames": ["keycloak/keycloak"],
-        "automerge": true
-      }
-    ]
-  }
+  "packageRules": [
+    {
+      "matchDatasources": ["github-releases"],
+      "matchDepNames": ["janus-iam/keycloak-totp-admin-api"],
+      "automerge": true
+    }
+  ]
+}
