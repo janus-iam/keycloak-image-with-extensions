@@ -1,4 +1,4 @@
-name: Build and Push Keycloak Image with extensions when new version is released
+name: B&P Keycloak image with extensions for new version
 
 on:
     pull_request:
@@ -10,6 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+
+      - name: Read Keycloak version from Containerfile
+        id: keycloak
+        run: |
+          version=$(grep -E '^ARG KEYCLOAK_VERSION=' Containerfile | cut -d= -f2)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
       - uses: docker/setup-qemu-action@v4
       - uses: docker/setup-buildx-action@v4
       - uses: docker/login-action@v4
@@ -23,7 +30,7 @@ jobs:
           file: Containerfile
           context: .
           build-args: |
-            KEYCLOAK_VERSION=${{ matrix.keycloak_version }}
+            KEYCLOAK_VERSION=${{ steps.keycloak.outputs.version }}
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_IMAGE }}:${{ matrix.keycloak_version }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_IMAGE }}:${{ steps.keycloak.outputs.version }}
           platforms: linux/amd64,linux/arm64
