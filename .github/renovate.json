@@ -10,6 +10,14 @@
         "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>.+?)\\s*ARG TOTP_ADMIN_API_VERSION=(?<currentValue>\\S+)"
       ],
       "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "kete JAR version",
+      "managerFilePatterns": ["/(^|/)Containerfile$/"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>.+?)\\s*ARG KETE_VERSION=(?<currentValue>\\S+)"
+      ]
     }
   ],
   "packageRules": [
@@ -18,6 +26,11 @@
       "matchDepNames": ["janus-iam/keycloak-totp-admin-api"],
       "automerge": true,
       "versioning": "semver"
+    },
+    {
+      "matchDatasources": ["github-releases"],
+      "matchDepNames": ["FortuneN/kete"],
+      "automerge": true
     }
   ]
 }
