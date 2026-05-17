@@ -1,2 +1,5 @@
 check-conf:
-    bunx --yes --package renovate -- renovate-config-validator
+    bunx renovate -- renovate-config-validator
+
+dry-run:
+    bunx renovate --platform=local --dry-run

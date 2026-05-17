@@ -5,9 +5,9 @@
     {
       "customType": "regex",
       "description": "keycloak-totp-admin-api JAR version",
-      "managerFilePatterns": ["(^|/)Containerfile$"],
+      "managerFilePatterns": ["/(^|/)Containerfile$/"],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>.+?)\\s+ARG TOTP_ADMIN_API_VERSION=(?<currentValue>\\S+)"
+        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>.+?)\\s*ARG TOTP_ADMIN_API_VERSION=(?<currentValue>\\S+)"
       ],
       "extractVersionTemplate": "^v(?<version>.*)$"
     }
@@ -16,7 +16,8 @@
     {
       "matchDatasources": ["github-releases"],
       "matchDepNames": ["janus-iam/keycloak-totp-admin-api"],
-      "automerge": true
+      "automerge": true,
+      "versioning": "semver"
     }
   ]
 }
