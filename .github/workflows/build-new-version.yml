@@ -1,17 +1,13 @@
 name: Build and Push Keycloak Image with extensions
 
 on:
-  workflow_dispatch:
+    pull_request:
+        branches:
+            - main
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        keycloak_version:
-          - "26.6.0"
-          - "26.6.1"
     steps:
       - uses: actions/checkout@v6
       - uses: docker/setup-qemu-action@v4
